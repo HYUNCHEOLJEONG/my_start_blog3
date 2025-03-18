@@ -1,31 +1,42 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project2", "Project2\Project2.vcxproj", "{B6E2905C-F18E-4980-9D67-ACDD599BBF24}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Debug|x64.ActiveCfg = Debug|x64
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Debug|x64.Build.0 = Debug|x64
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Debug|x86.ActiveCfg = Debug|Win32
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Debug|x86.Build.0 = Debug|Win32
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Release|x64.ActiveCfg = Release|x64
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Release|x64.Build.0 = Release|x64
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Release|x86.ActiveCfg = Release|Win32
-		{B6E2905C-F18E-4980-9D67-ACDD599BBF24}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {842C2B15-5043-4CF5-8601-64E1C5271207}
-	EndGlobalSection
-EndGlobal
+#include<iostream>
+#include<string>
+#include<map>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;  // 이메일의 개수 입력
+    string email_ID;
+    map<string, int> domain_count;  // 도메인별 카운트를 저장할 map
+
+    // 사용자 이메일 입력받기
+    for (int i = 0; i < N; i++) {
+        cin >> email_ID;
+
+        // 이메일에서 도메인 추출
+        size_t pos = email_ID.find('@');  // '@'의 위치 찾기
+        if (pos != string::npos) {
+            string domain = email_ID.substr(pos + 1);  // '@' 이후의 문자열(도메인)
+            domain_count[domain]++;  // 해당 도메인의 카운트 증가
+        }
+    }
+
+    // "example.com"과 "gmail.com"이 포함된 이메일 수 카운트
+    int MAX_count_email = 0;
+    int MAX_count2_email = 0;
+
+    for (const auto& pair : domain_count) {
+        if (pair.first.find("example") != string::npos) {  // "example"이 포함된 도메인
+            MAX_count_email += pair.second;
+        }
+        if (pair.first.find("gmail") != string::npos) {  // "gmail"이 포함된 도메인
+            MAX_count2_email += pair.second;
+        }
+    }
+
+    // 결과 출력
+    cout << "example.com: " << MAX_count_email << endl;
+    cout << "gmail.com: " << MAX_count2_email << endl;
+
+    return 0;
+}
